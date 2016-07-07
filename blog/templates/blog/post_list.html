@@ -14,9 +14,14 @@
         </div>
         <div>
             {% for post in posts %}
-            <p>發佈時間: {{post.created_date}}</p>
-            <h2><a href="{% url 'post_record' key=post.id %}">{{post.title}}</a></h2>
-            <p>{{post.text|linebreaks}}</p>
+                {% if post.text|length > 10 %} 
+                    <p>發佈時間: {{post.created_date}}</p>
+                    <h2><a href="{% url 'post_record' key=post.id %}">{{post.title}}</a></h2>
+                    <p>{{post.text|linebreaks}}</p>
+                {% endif %}
+                {% ifequal post.id 10 %}
+                    <p>i'm 10</p>
+                {% endifequal %}
             {% endfor %}
         </div>
 	   <div class="row">
