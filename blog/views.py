@@ -34,7 +34,53 @@ def add_record(request):
 			post.author = me
 			post.save()
 		return redirect('/blog')
-
+'''
 def post_record(request,key):
-	post = Post.objects.get(id = key)
-	return render(request, 'blog/post_record.html', locals())
+    posts = Post.objects.filter(id__gte=key)[:2]
+    post = posts[0]
+    next_post = posts[1]
+    return render(request, 'blog/post_record.html', locals())
+
+# not that correct but works
+def post_record(request,key):
+    posts = Post.objects.filter(id__gte=key)
+    post = posts[0]
+    try:
+        next_post = posts[1]
+    except IndexError:
+        next_post = post
+    return render(request, 'blog/post_record.html', locals())
+'''
+'''
+# correct but little slower
+def post_record(request,key):
+    posts = Post.objects.filter(id__gte=key)[:2]
+    post = posts[0]
+    post_max = Post.objects.order_by('id').last() 
+    id_max = post_max.id
+    if post.id == id_max:
+        next_post = post
+    else:
+        next_post = posts[1]
+    return render(request, 'blog/post_record.html', locals())
+'''
+
+# correct
+def post_record(request,key):
+    posts = Post.objects.filter(id__gte=key)[:2]
+    if len(posts) == 1:
+       post = posts[0]
+       next_post = post
+    else:
+       post = posts[0]
+       next_post = posts[1]
+    return render(request, 'blog/post_record.html', locals())
+
+@csrf_exempt
+def delete_record(request,id):
+    if request.method == 'POST':
+    #if request.POST:
+        Post.objects.filter(id = id).delete()
+        return redirect('/blog')
+    else:
+        return render(request,'404.html')

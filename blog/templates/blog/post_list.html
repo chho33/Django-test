@@ -1,42 +1,28 @@
-{% load staticfiles %}
-<html>
-    <head>
-        <title>III's blog</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-		<link href="http://fonts.googleapis.com/css?family=Gloria+Hallelujah&effect=neon&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-        <!--<link rel="stylesheet" href="/static/css/blog.css">-->
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}"> 
-    </head>
-    <body>
-        <div>
-            <h1><a href="" class="font-effect-neon">III's Blog</a></h1>
-        </div>
-        <div>
-            {% for post in posts %}
-                {% if post.text|length > 10 %} 
-                    <p>發佈時間: {{post.created_date}}</p>
-                    <h2><a href="{% url 'post_record' key=post.id %}">{{post.title}}</a></h2>
-                    <p>{{post.text|linebreaks}}</p>
-                {% endif %}
-                {% ifequal post.id 10 %}
-                    <p>i'm 10</p>
-                {% endifequal %}
-            {% endfor %}
-        </div>
-	   <div class="row">
-	       <div class="col-md-8">
-	           <h4>發佈新文章:</h4>
-	       </div>
-	       <div class="col-md-8">
-	           <form action="{% url 'add_record' %}" method="get" accept-charset="utf-8">
-	           		<table>
-	           			{{post_form.as_table}}
-	           		</table>
-	               <input type="submit" name="add_record" value="提交">
-	           </form>
-	       </div>
-	    </div>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" ></script>
-    </body>
-</html>
+{% extends 'blog/base.html'  %}
+{% block content %}
+<div>
+    {% for post in posts %}
+        {% if post.text|length > 10 %} 
+            <p>發佈時間: {{post.created_date}}</p>
+            <h2><a href="{% url 'post_record' key=post.id %}">{{post.title}}</a></h2>
+            <p>{{post.text|linebreaks}}</p>
+        {% endif %}
+        {% ifequal post.id 10 %}
+            <p>i'm 10</p>
+        {% endifequal %}
+    {% endfor %}
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <h4>發佈新文章:</h4>
+    </div>
+    <div class="col-md-8">
+        <form action="{% url 'add_record' %}" method="post" accept-charset="utf-8">
+        		<table>
+        			{{post_form.as_table}}
+        		</table>
+            <input type="submit" name="add_record" value="提交">
+        </form>
+    </div>
+</div>
+{% endblock %}

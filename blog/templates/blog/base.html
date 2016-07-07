@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>III's blog</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<link href="http://fonts.googleapis.com/css?family=Gloria+Hallelujah&effect=neon&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+        <!--<link rel="stylesheet" href="/static/css/blog.css">-->
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}"> 
+    </head>
+    <body>
+        <div>
+            <h1><a href="" class="font-effect-neon">III's Blog</a></h1>
+        </div>
+        {% block content %} {% endblock %}
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" ></script>
+    </body>
+</html>
